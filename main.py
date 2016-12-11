@@ -131,17 +131,8 @@ def Matrix_update():
   Omega=Vector_Add(Gyro_Vector, Omega_I)  #adding proportional term
   Omega_Vector=Vector_Add(Omega, Omega_P) #adding Integrator term
   
-#if DEBUG__NO_DRIFT_CORRECTION == true # Do not use drift correction
-  Update_Matrix[0][0]=0
-  Update_Matrix[0][1]=-G_Dt*Gyro_Vector[2]#-z
-  Update_Matrix[0][2]=G_Dt*Gyro_Vector[1]#y
-  Update_Matrix[1][0]=G_Dt*Gyro_Vector[2]#z
-  Update_Matrix[1][1]=0
-  Update_Matrix[1][2]=-G_Dt*Gyro_Vector[0]
-  Update_Matrix[2][0]=-G_Dt*Gyro_Vector[1]
-  Update_Matrix[2][1]=G_Dt*Gyro_Vector[0]
-  Update_Matrix[2][2]=0
-#else # Use drift correction
+
+# Use drift correction
   Update_Matrix[0][0]=0
   Update_Matrix[0][1]=-G_Dt*Omega_Vector[2]#-z
   Update_Matrix[0][2]=G_Dt*Omega_Vector[1]#y
@@ -151,7 +142,6 @@ def Matrix_update():
   Update_Matrix[2][0]=-G_Dt*Omega_Vector[1]#-y
   Update_Matrix[2][1]=G_Dt*Omega_Vector[0]#x
   Update_Matrix[2][2]=0
-#endif
 
   Matrix_Multiply(DCM_Matrix,Update_Matrix,Temporary_Matrix) #a*b=c
 
